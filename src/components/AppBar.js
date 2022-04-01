@@ -10,7 +10,7 @@ export default function NavBar() {
     const StyledAppBar=styled(AppBar)`
         background: white;
         position:relative;
-        margin-bottom: 40px
+        margin-bottom: 40px;
     `;
     const StyledLogo=styled.img`
         width: 10%;

@@ -9,12 +9,13 @@ const api = createApi({
 accessKey: "q7m0afK2EKltLfZOpy70IDIetxIOd81hVwGOQ47L7_I"
 });
 
-export default function Body() {
+export default function Body(props) {
 const [data, setPhotosResponse] = useState(null);
+const [query, setQuery] = useState(props.query);
 
 useEffect(() => {
     api.search
-    .getPhotos({ query: "mountains"})
+    .getPhotos({ query: {query}})
     .then(result => {
         setPhotosResponse(result);
     })
@@ -22,8 +23,8 @@ useEffect(() => {
         console.log("something went wrong!");
     });
     
-}, []);
-console.log(data);
+}, [query]);
+console.log(query);
 if (data === null) {
     return <div>Loading...</div>;
 } else if (data.errors) {
