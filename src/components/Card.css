@@ -1,0 +1,15 @@
+* {
+	box-sizing: border-box;
+}
+img {
+  width: 100%;
+  border-radius: 25px;
+}
+main {
+	columns: 250px;
+	column-gap: 20px; 
+}
+article {
+	break-inside: avoid-column;
+	margin: 10px; 
+}
