@@ -1,13 +1,16 @@
 * {
 	box-sizing: border-box;
 }
-img {
-  width: 100%;
-  border-radius: 25px;
+body{
+	position: relative;
+}
+.card-images {
+	min-width: 30%;
+	border-radius: 25px;
 }
 main {
 	columns: 250px;
-	column-gap: 20px; 
+	column-gap: 15px;
 }
 article {
 	break-inside: avoid-column;

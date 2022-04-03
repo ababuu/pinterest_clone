@@ -11,11 +11,10 @@ accessKey: "q7m0afK2EKltLfZOpy70IDIetxIOd81hVwGOQ47L7_I"
 
 export default function Body(props) {
 const [data, setPhotosResponse] = useState(null);
-const [query, setQuery] = useState(props.query);
 
 useEffect(() => {
     api.search
-    .getPhotos({ query: {query}})
+    .getPhotos({ query: props.query})
     .then(result => {
         setPhotosResponse(result);
     })
@@ -23,8 +22,8 @@ useEffect(() => {
         console.log("something went wrong!");
     });
     
-}, [query]);
-console.log(query);
+}, []);
+console.log(props.query)
 if (data === null) {
     return <div>Loading...</div>;
 } else if (data.errors) {

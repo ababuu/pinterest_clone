@@ -11,6 +11,7 @@ export default function NavBar() {
         background: white;
         position:relative;
         margin-bottom: 40px;
+        box-shadow:none;
     `;
     const StyledLogo=styled.img`
         width: 10%;

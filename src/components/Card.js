@@ -2,15 +2,19 @@
 import './Card.css'
 
     export default function ImageMasonry(props) {
-        
+
     return (
-        <main>
-            {props.photos.map(photo=>(
-                <article key={photo.id}>
-                    <img src={photo.urls.regular} alt={photo.alt}/>
-                </article>
+        <div>
+            {props.margin.map(mt=>(
+                <main style={{marginTop:mt}}>
+                {props.photos.map(photo=>(
+                    <article key={photo}>
+                        <img className='card-images' src={photo} alt={photo.alt}/>
+                    </article>
+                ))}
+            </main>
             ))}
-        </main>
+        </div>
     );
     }
 
