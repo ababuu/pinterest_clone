@@ -1,11 +1,11 @@
-    import * as React from 'react';
-import './Card.css'
+import * as React from 'react';
+import '../styles/Card.css'
 
     export default function ImageMasonry(props) {
 
     return (
-        <div>
-            {props.margin.map(mt=>(
+        <body>
+            {/* {props.fromAnime && props.margin.map(mt=>(
                 <main style={{marginTop:mt}}>
                 {props.photos.map(photo=>(
                     <article key={photo}>
@@ -14,7 +14,15 @@ import './Card.css'
                 ))}
             </main>
             ))}
-        </div>
+            {props.fromHome &&  */}
+                
+                {props.photos.map(photo=>(
+                    <article key={photo.id}>
+                        <img className='card-images' src={photo.urls.regular} alt={photo.alt}/>
+                    </article>
+                ))}
+            {/* } */}
+        </body>
     );
     }
 

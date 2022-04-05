@@ -1,8 +1,7 @@
 import React from "react";
-import './Anime.css';
+import '../styles/Anime.css';
 import BasicCard from './Card';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-import { Icon } from "@mui/material";
 
 const textDetails = [{
                     text:"green thumb idea",
@@ -96,7 +95,7 @@ return (
             className="slide"
             key={index}
         >
-            <BasicCard photos={text.url} margin={text.margin}/>
+            <BasicCard fromAime={true} photos={text.url} margin={text.margin}/>
             
         </div>
         ))}

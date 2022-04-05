@@ -14,7 +14,7 @@ const [data, setPhotosResponse] = useState(null);
 
 useEffect(() => {
     api.search
-    .getPhotos({ query: props.query})
+    .getPhotos({ query: 'cars'})
     .then(result => {
         setPhotosResponse(result);
     })
@@ -23,7 +23,7 @@ useEffect(() => {
     });
     
 }, []);
-console.log(props.query)
+console.log(data)
 if (data === null) {
     return <div>Loading...</div>;
 } else if (data.errors) {
@@ -36,7 +36,7 @@ if (data === null) {
 } else {
     return (
     <div className="feed">
-            <BasicCard photos={data.response.results} />
+            <BasicCard fromHome={true} photos={data.response.results} />
     </div>
     );
 }

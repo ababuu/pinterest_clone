@@ -1,14 +1,16 @@
 import React from 'react';
-import './App.css';
+import './styles/App.css';
 import AppBar from './components/AppBar';
 
 import Anime from './components/Anime'
+import Home from './components/HomePage';
 
 function App() {
   return (
     <div className="App">
-      <AppBar/>
-      <Anime/>
+      {/* <AppBar unauth={true}/>
+      <Anime/> */}
+      <Home/>
     </div>
   );
 }

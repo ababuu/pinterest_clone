@@ -5,9 +5,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import styled from '@emotion/styled';
 import Logo from '../images/Pinterest-Logo.png';
+import { Navigate } from 'react-router-dom';
+import Login from './Login'
+import SignUp from './Signup';
+import Avatar from '@mui/material/Avatar';
 
-export default function NavBar() {
-    const StyledAppBar=styled(AppBar)`
+const StyledAppBar=styled(AppBar)`
         background: white;
         position:relative;
         margin-bottom: 40px;
@@ -63,17 +66,49 @@ export default function NavBar() {
         font-weight:bold;
         curser: pointer;
     `;
-return (
-    
-    <Box sx={{ flexGrow: 1 }}>
-    <StyledAppBar position="static">
-        <Toolbar>
-            <StyledLogo src={Logo}/>
-            <StyledButton>Log in</StyledButton>
+    const StyledSearchInput=styled.input`
+        width:80%;
+        height: 100%;
+        padding:15px;
+        border-radius: 20px;
+        border: 2px solid lightgray;
+        margin-left:10px;
+        margin-right:50px;
+        background-image: url(https://www.freeiconspng.com/thumbs/search-icon-png/search-icon-png-5.png);
+        background-color: white;
+        background-repeat: no-repeat;
+        background-position: 98% 15px;
+        background-size:20px;
+    `;
 
-            <StyledButton2>Sign in</StyledButton2>
-        </Toolbar>
+export default function NavBar(props) {
+
+    const [gotoLogin, setGotoLogin] = React.useState(false);
+    const [gotoSignup, setGotoSignup] = React.useState(false);
+    const handleLoginClick=()=>{
+        setGotoLogin(true);
+    }
+    const handleSignupClick=()=>{
+        setGotoSignup(true);
+    }
+return (
+    <div>
+        <Box sx={{ flexGrow: 1 }}>
+    <StyledAppBar position="static">
+        {props.unauth && <Toolbar>
+            <StyledLogo src={Logo}/>
+            <StyledButton onClick={handleLoginClick}>Log in</StyledButton>
+            <StyledButton2 onClick={handleSignupClick}>Sign in</StyledButton2>
+        </Toolbar>}
+        {!props.unauth && <Toolbar>
+            <StyledLogo src={Logo}/>
+            <StyledSearchInput type='text' placeholder='Search'/>
+            <Avatar alt="A" src="" />
+        </Toolbar>}
     </StyledAppBar>
     </Box>
+    {gotoLogin && <Login />}
+    {gotoSignup && <SignUp/>}
+    </div>
 );
 }
