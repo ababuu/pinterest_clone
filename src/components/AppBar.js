@@ -108,12 +108,11 @@ return (
         </Toolbar>}
         {!props.unauth && 
         <div className="menu">
-            <img draggable="false" class="logo" src="https://cdn1.iconfinder.com/data/icons/logotypes/32/pinterest-512.png"/>
-            <input id="one" type="text" class="search-bar" placeholder="Search"/>
-            <button id="two" class="search-bar"></button>
+            <img draggable="false" className="logo" src="https://cdn1.iconfinder.com/data/icons/logotypes/32/pinterest-512.png"/>
+            <input id="one" type="text" className="search-bar" placeholder="Search"/>
+            
             <div class="icon-container">
-                
-                <img tabindex="1" draggable="false" class="icon pp" src="https://i.pinimg.com/564x/bd/94/ce/bd94ce28cf8aefb521bac31d547f6409.jpg"/>
+                <img tabindex="1" draggable="false" className="icon pp" src="https://i.pinimg.com/564x/bd/94/ce/bd94ce28cf8aefb521bac31d547f6409.jpg"/>
                 <button onClick={handleLogoutClick}>logout</button>
             </div>
         </div>}

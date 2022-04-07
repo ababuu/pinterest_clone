@@ -17,10 +17,10 @@ export default function MainCard(props) {
         <div class="container">
                 {
                     props.photos1.map(photo=>(
-                            <div class="column">
+                                <div className="column">
                             {photo.response.results.map(pic=>(
-                                <div class="content-wrapper">
-                                <div class="image-wrapper">
+                                <div className="content-wrapper">
+                                <div className="image-wrapper">
                                     <div class="overlay">
                                     <div>
                                         <p><a href={pic.user.links.html}>Creator</a></p>

@@ -21,6 +21,7 @@ body {
     max-width: 100%;
     column-gap: 1em;
     padding: 2em;
+    margin:10px
 }
 
 .image-wrapper {
@@ -40,8 +41,9 @@ body {
 .column {
     display: flex;
     flex-direction: column;
-    gap: 3em;
+    gap: 1em;
     height: fit-content;
+    margin-top: 0px;
 }
 
 .content-wrapper p {
