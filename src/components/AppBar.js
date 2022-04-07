@@ -10,6 +10,19 @@ import Login from './Login';
 import SignUp from './Signup';
 import '../styles/AppBar.css';
 import App from '../App';
+import Modal from '@mui/material/Modal';
+
+const style = {
+    position: 'absolute',
+    top: '22%',
+    left: '90%',
+    transform: 'translate(-50%, -50%)',
+    width: '130px',
+    height:'110px',
+    bgcolor: 'background.paper',
+    p: 4,
+    borderRadius:'20px'
+};
 
 const StyledAppBar=styled(AppBar)`
         background: white;
@@ -82,9 +95,18 @@ const StyledAppBar=styled(AppBar)`
         background-position: 98% 15px;
         background-size:20px;
     `;
+    const StyledText=styled.p`
+        padding: 5px;
+        cursor: pointer;
+        &:hover{
+            font-weight: bolder;
+        }
+    `
 
 export default function NavBar(props) {
-
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [gotoLogin, setGotoLogin] = React.useState(false);
     const [gotoSignup, setGotoSignup] = React.useState(false);
     const [logout, setLogout] = React.useState(false);
@@ -96,6 +118,9 @@ export default function NavBar(props) {
     }
     const handleLogoutClick=()=>{
         setLogout(true);
+    }
+    const handleProfileClick=()=>{
+        handleOpen();
     }
 return (
     <div className='outer-div'>
@@ -110,17 +135,36 @@ return (
         <div className="menu">
             <img draggable="false" className="logo" src="https://cdn1.iconfinder.com/data/icons/logotypes/32/pinterest-512.png"/>
             <input id="one" type="text" className="search-bar" placeholder="Search"/>
-            
             <div class="icon-container">
-                <img tabindex="1" draggable="false" className="icon pp" src="https://i.pinimg.com/564x/bd/94/ce/bd94ce28cf8aefb521bac31d547f6409.jpg"/>
-                <button onClick={handleLogoutClick}>logout</button>
+                <img tabindex="1" draggable="false" className="icon pp" src="https://i.pinimg.com/564x/bd/94/ce/bd94ce28cf8aefb521bac31d547f6409.jpg" onClick={handleProfileClick}/>
             </div>
         </div>}
     </StyledAppBar>
+   
+        <div>
+            <Modal
+            PaperProps={{
+                style: {
+                  backgroundColor: 'transparent',
+                  boxShadow: 'none',
+                },
+              }}
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+             <StyledText>Profile</StyledText>
+             <StyledText onClick={handleLogoutClick}>Logout</StyledText>
+            </Box>
+        </Modal>
+            </div>
     </Box>
     {gotoLogin && <Login gotoLogin={gotoLogin}/>}
     {gotoSignup && <SignUp/>}
     {logout && <Navigate to='/' replace/>}
+    
     </div>
 );
 }
