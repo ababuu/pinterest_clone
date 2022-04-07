@@ -6,9 +6,10 @@ import Button from '@mui/material/Button';
 import styled from '@emotion/styled';
 import Logo from '../images/Pinterest-Logo.png';
 import { Navigate } from 'react-router-dom';
-import Login from './Login'
+import Login from './Login';
 import SignUp from './Signup';
-import Avatar from '@mui/material/Avatar';
+import '../styles/AppBar.css';
+import App from '../App'
 
 const StyledAppBar=styled(AppBar)`
         background: white;
@@ -86,14 +87,18 @@ export default function NavBar(props) {
 
     const [gotoLogin, setGotoLogin] = React.useState(false);
     const [gotoSignup, setGotoSignup] = React.useState(false);
+    const [logout, setLogout] = React.useState(false);
     const handleLoginClick=()=>{
         setGotoLogin(true);
     }
     const handleSignupClick=()=>{
         setGotoSignup(true);
     }
+    const handleLogoutClick=()=>{
+        setLogout(true);
+    }
 return (
-    <div>
+    <div className='outer-div'>
         <Box sx={{ flexGrow: 1,width:'100%' }}>
     <StyledAppBar position="static">
         {props.unauth && <Toolbar>
@@ -101,15 +106,22 @@ return (
             <StyledButton onClick={handleLoginClick}>Log in</StyledButton>
             <StyledButton2 onClick={handleSignupClick}>Sign in</StyledButton2>
         </Toolbar>}
-        {!props.unauth && <Toolbar>
-            <StyledLogo src={Logo}/>
-            <StyledSearchInput type='text' placeholder='Search'/>
-            <Avatar alt="A" src="" />
-        </Toolbar>}
+        {!props.unauth && 
+        <div className="menu">
+            <img draggable="false" class="logo" src="https://cdn1.iconfinder.com/data/icons/logotypes/32/pinterest-512.png"/>
+            <input id="one" type="text" class="search-bar" placeholder="Search"/>
+            <button id="two" class="search-bar"></button>
+            <div class="icon-container">
+                
+                <img tabindex="1" draggable="false" class="icon pp" src="https://i.pinimg.com/564x/bd/94/ce/bd94ce28cf8aefb521bac31d547f6409.jpg"/>
+                <button onClick={handleLogoutClick}>logout</button>
+            </div>
+        </div>}
     </StyledAppBar>
     </Box>
     {gotoLogin && <Login />}
     {gotoSignup && <SignUp/>}
+    {logout && <Navigate to='/' replace/>}
     </div>
 );
 }

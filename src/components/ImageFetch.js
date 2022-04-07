@@ -12,7 +12,7 @@ accessKey: "q7m0afK2EKltLfZOpy70IDIetxIOd81hVwGOQ47L7_I"
 export default function Body(props) {
 const [data, setPhotosResponse] = useState([]);
 const [data2, setData2]=useState(null);
-const queries=['landscape','dogs', 'cats','flower','car','trees','bike'];
+const queries=['landscape','dogs', 'cats','flower','car','trees','bike','hiking'];
 
 useEffect(() => {
     queries.map(query=>{

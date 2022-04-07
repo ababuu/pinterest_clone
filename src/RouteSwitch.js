@@ -3,7 +3,7 @@ import * as React from 'react';
 import App from './App';
 import Login from './components/Login';
 import HomePage from './components/HomePage';
-
+import Anime from './components/Anime'
 
 function RouteSwitch(){
     return(

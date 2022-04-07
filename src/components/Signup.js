@@ -10,9 +10,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Modal from '@mui/material/Modal';
 import PinterestLogo from '../images/Pinterest-Logo-notext.png'
 import styled from '@emotion/styled';
-import {auth} from '../firebase.config';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {auth,provider} from '../firebase.config';
+import { signInWithPopup, GoogleAuthProvider,createUserWithEmailAndPassword } from "firebase/auth";
 import { Navigate } from 'react-router-dom';
+import Login from './Login';
 
 const style = {
     position: 'absolute',
@@ -100,6 +101,7 @@ const theme = createTheme();
 
 export default function SignUp() {
     const [autenticated, setAutenticated] = React.useState(false);
+    const [gotoLogin,setGotoLogin]=React.useState(false);
     const [open, setOpen] = React.useState(true);
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -130,6 +132,32 @@ export default function SignUp() {
         password: password,
         });
     };
+    const handleGoogleSignup=()=>{
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            setAutenticated(true);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+
+            // ...
+        }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+        });
+    }
+    const handleAlreadyMember=()=>{
+        setOpen(false);
+        setGotoLogin(true);
+    }
 
 return (
     <div>
@@ -165,8 +193,8 @@ return (
                 <StyledLink href='#'>Forgotten your password?</StyledLink>
                 <StyledButtonLogin type='submit'>Continue</StyledButtonLogin>
                 <StyledTextOr>OR</StyledTextOr>
-                <StyledButtonGoogle>Continue with Google</StyledButtonGoogle>
-                <StyledLink href='#'>Already a member? Log in</StyledLink>
+                <StyledButtonGoogle onClick={handleGoogleSignup}>Continue with Google</StyledButtonGoogle>
+                <StyledLink onClick={handleAlreadyMember}>Already a member? Log in</StyledLink>
             </div>
         </Box>
         </Box>
@@ -175,7 +203,8 @@ return (
     </ThemeProvider>
         </Box>
     </Modal>
-    {autenticated && <Navigate to='/home'/>}
+    {autenticated && <Navigate to='/home' replace/>}
+    {gotoLogin && <Login/>}
     </div>
 );
 }
