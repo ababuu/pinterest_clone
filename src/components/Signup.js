@@ -155,7 +155,6 @@ export default function SignUp() {
         });
     }
     const handleAlreadyMember=()=>{
-        setOpen(false);
         setGotoLogin(true);
     }
 

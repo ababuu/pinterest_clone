@@ -9,7 +9,7 @@ import { Navigate } from 'react-router-dom';
 import Login from './Login';
 import SignUp from './Signup';
 import '../styles/AppBar.css';
-import App from '../App'
+import App from '../App';
 
 const StyledAppBar=styled(AppBar)`
         background: white;
@@ -119,7 +119,7 @@ return (
         </div>}
     </StyledAppBar>
     </Box>
-    {gotoLogin && <Login />}
+    {gotoLogin && <Login gotoLogin={gotoLogin}/>}
     {gotoSignup && <SignUp/>}
     {logout && <Navigate to='/' replace/>}
     </div>

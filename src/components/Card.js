@@ -6,7 +6,7 @@ import '../styles/Card.css'
     return (
         <body>
             {props.fromAnime && props.margin.map(mt=>(
-                <main style={{marginTop:mt}}>
+                <main>
                 {props.photos.map(photo=>(
                     <article key={photo}>
                         <img className='card-images' src={photo} alt={photo.alt}/>

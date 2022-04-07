@@ -13,6 +13,7 @@ import styled from '@emotion/styled';
 import {auth,provider} from '../firebase.config';
 import { signInWithPopup, GoogleAuthProvider,signInWithEmailAndPassword  } from "firebase/auth";
 import { Navigate } from 'react-router-dom';
+import SignUp from './Signup';
 
 
 
@@ -103,10 +104,10 @@ return (
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignIn(props) {
     const [autenticated, setAutenticated] = React.useState(false);
-    const [gotoLogin,setGotoLogin]=React.useState(false);
-    const [open, setOpen] = React.useState(true);
+    const [gotoSignup,setGotoSignup]=React.useState(false);
+    const [open, setOpen] = React.useState(props.gotoLogin);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [email, setEmail] = React.useState('');
@@ -132,54 +133,60 @@ export default function SignIn() {
             console.log(errorMessage)
         });
     };
+    const handleNotSignedup=()=>{
+        setGotoSignup(true);
+
+    }
         
 
 
 return (
     <div>
+    {props.gotoLogin &&
     <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+    open={open}
+    onClose={handleClose}
+    aria-labelledby="modal-modal-title"
+    aria-describedby="modal-modal-description"
+>
+    <Box sx={style}>
+    <ThemeProvider theme={theme}>
+<Container component="main" maxWidth="xs">
+    <CssBaseline/>
+    <Box
+    sx={{
+        marginTop: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    }}
     >
-        <Box sx={style}>
-        <ThemeProvider theme={theme}>
-    <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-        sx={{
-            marginTop: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-        }}
-        >
-        <Avatar sx={{background: 'white'}}>
-            <img style={{width:'100%'}} src={PinterestLogo} />
-        </Avatar>
-        <h1 style={{fontSize:'2em'}}>
-            Welcome to Pinterest
-        </h1>
-        <Box component="form" onSubmit={handleSubmit} noValidate style={{width:'100%'}}>
-            
-            <div style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
-            <StyledTextField type='email' placeholder='Email Address' name='email' value={email} onChange={handleEmailChange}/>
-                <StyledTextField type='password' placeholder='Password' name='password' value={password} onChange={handlePasswordChange}/>
-                <StyledLink href='#'>Forgotten your password?</StyledLink>
-                <StyledButtonLogin type='submit'>Log in</StyledButtonLogin>
-                <StyledTextOr>OR</StyledTextOr>
-                <StyledButtonGoogle>Continue with Google</StyledButtonGoogle>
-                <StyledLink href='#'>Not on Pinterest yet? Sign-up</StyledLink>
-            </div>
-        </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-    </Container>
-    </ThemeProvider>
-        </Box>
-    </Modal>
+    <Avatar sx={{background: 'white'}}>
+        <img style={{width:'100%'}} src={PinterestLogo} />
+    </Avatar>
+    <h1 style={{fontSize:'2em'}}>
+        Welcome to Pinterest
+    </h1>
+    <Box component="form" onSubmit={handleSubmit} noValidate style={{width:'100%'}}>
+        
+        <div style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
+        <StyledTextField type='email' placeholder='Email Address' name='email' value={email} onChange={handleEmailChange}/>
+            <StyledTextField type='password' placeholder='Password' name='password' value={password} onChange={handlePasswordChange}/>
+            <StyledLink href='#'>Forgotten your password?</StyledLink>
+            <StyledButtonLogin type='submit'>Log in</StyledButtonLogin>
+            <StyledTextOr>OR</StyledTextOr>
+            <StyledButtonGoogle>Continue with Google</StyledButtonGoogle>
+            <StyledLink onClick={handleNotSignedup}>Not on Pinterest yet? Sign-up</StyledLink>
+        </div>
+    </Box>
+    </Box>
+    <Copyright sx={{ mt: 8, mb: 4 }} />
+</Container>
+</ThemeProvider>
+    </Box>
+</Modal>}
     {autenticated && <Navigate to='/home' replace/>}
+    {gotoSignup && <SignUp/>}
     </div>
 );
 }
