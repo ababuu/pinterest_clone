@@ -1,7 +1,7 @@
 import * as React from 'react';
 import AppBar from './AppBar';
 import ImageFetch from './ImageFetch';
-export default function Home() {
+export default function HomePage() {
     return(
         <body>
             <AppBar unauth={false}/>

@@ -12,6 +12,7 @@ import PinterestLogo from '../images/Pinterest-Logo-notext.png'
 import styled from '@emotion/styled';
 
 
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -83,6 +84,7 @@ const StyledLink=styled.a`
 
 
 function Copyright(props) {
+
 return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
     {'Copyright © '}
@@ -109,6 +111,8 @@ export default function SignIn() {
             password: data.get('password'),
         });
     };
+        
+
 
 return (
     <div>

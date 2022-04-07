@@ -10,7 +10,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Modal from '@mui/material/Modal';
 import PinterestLogo from '../images/Pinterest-Logo-notext.png'
 import styled from '@emotion/styled';
-
+import {auth} from '../firebase.config';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { Navigate } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -97,15 +99,35 @@ return (
 const theme = createTheme();
 
 export default function SignUp() {
+    const [autenticated, setAutenticated] = React.useState(false);
     const [open, setOpen] = React.useState(true);
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const handleEmailChange=(e)=>{
+        setEmail(e.target.value);
+    }
+    const handlePasswordChange=(e)=>{
+        setPassword(e.target.value);
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+            setAutenticated(true);
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+        });
         console.log({
-        email: data.get('email'),
-        password: data.get('password'),
+        email: email,
+        password: password,
         });
     };
 
@@ -138,9 +160,8 @@ return (
         <Box component="form" onSubmit={handleSubmit} noValidate style={{width:'100%'}}>
             
             <div style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
-                <StyledTextField type='email' placeholder='Email Address'/>
-                <StyledTextField type='password' placeholder='Password'/>
-                <StyledTextField type='number' placeholder='Age'/>
+                <StyledTextField type='email' placeholder='Email Address' name='email' value={email} onChange={handleEmailChange}/>
+                <StyledTextField type='password' placeholder='Password' name='password' value={password} onChange={handlePasswordChange}/>
                 <StyledLink href='#'>Forgotten your password?</StyledLink>
                 <StyledButtonLogin type='submit'>Continue</StyledButtonLogin>
                 <StyledTextOr>OR</StyledTextOr>
@@ -154,6 +175,7 @@ return (
     </ThemeProvider>
         </Box>
     </Modal>
+    {autenticated && <Navigate to='/home'/>}
     </div>
 );
 }

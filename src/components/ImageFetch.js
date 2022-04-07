@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { createApi } from "unsplash-js";
-import BasicCard from './Card';
+import MainCard from './MainCards';
 
 const api = createApi({
 // Don't forget to set your access token here!
@@ -10,21 +10,25 @@ accessKey: "q7m0afK2EKltLfZOpy70IDIetxIOd81hVwGOQ47L7_I"
 });
 
 export default function Body(props) {
-const [data, setPhotosResponse] = useState(null);
+const [data, setPhotosResponse] = useState([]);
+const [data2, setData2]=useState(null);
+const queries=['landscape','dogs', 'cats','flower','car','trees','bike'];
 
 useEffect(() => {
-    api.search
-    .getPhotos({ query: 'cars'})
-    .then(result => {
-        setPhotosResponse(result);
+    queries.map(query=>{
+        api.search
+        .getPhotos({ query: query})
+        .then(result => {
+            setPhotosResponse(prev=>[...prev,result]);
+        })
+        .catch(() => {
+            console.log("something went wrong!");
+        });
     })
-    .catch(() => {
-        console.log("something went wrong!");
-    });
     
 }, []);
 console.log(data)
-if (data === null) {
+if (data === null || data.length<queries.length) {
     return <div>Loading...</div>;
 } else if (data.errors) {
     return (
@@ -36,7 +40,7 @@ if (data === null) {
 } else {
     return (
     <div className="feed">
-            <BasicCard fromHome={true} photos={data.response.results} />
+            <MainCard photos1={data}/>
     </div>
     );
 }

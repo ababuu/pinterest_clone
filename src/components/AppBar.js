@@ -15,6 +15,7 @@ const StyledAppBar=styled(AppBar)`
         position:relative;
         margin-bottom: 40px;
         box-shadow:none;
+        width:100%
     `;
     const StyledLogo=styled.img`
         width: 10%;
@@ -67,7 +68,7 @@ const StyledAppBar=styled(AppBar)`
         curser: pointer;
     `;
     const StyledSearchInput=styled.input`
-        width:80%;
+        width:60%;
         height: 100%;
         padding:15px;
         border-radius: 20px;
@@ -93,7 +94,7 @@ export default function NavBar(props) {
     }
 return (
     <div>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1,width:'100%' }}>
     <StyledAppBar position="static">
         {props.unauth && <Toolbar>
             <StyledLogo src={Logo}/>

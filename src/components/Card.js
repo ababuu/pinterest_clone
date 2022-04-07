@@ -5,7 +5,7 @@ import '../styles/Card.css'
 
     return (
         <body>
-            {/* {props.fromAnime && props.margin.map(mt=>(
+            {props.fromAnime && props.margin.map(mt=>(
                 <main style={{marginTop:mt}}>
                 {props.photos.map(photo=>(
                     <article key={photo}>
@@ -14,14 +14,6 @@ import '../styles/Card.css'
                 ))}
             </main>
             ))}
-            {props.fromHome &&  */}
-                
-                {props.photos.map(photo=>(
-                    <article key={photo.id}>
-                        <img className='card-images' src={photo.urls.regular} alt={photo.alt}/>
-                    </article>
-                ))}
-            {/* } */}
         </body>
     );
     }

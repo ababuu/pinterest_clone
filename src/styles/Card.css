@@ -1,8 +1,9 @@
-* {
+/* * {
 	box-sizing: border-box;
-}
+} */
 body{
 	position: relative;
+	width: 100%;
 }
 .card-images {
 	border-radius: 25px;

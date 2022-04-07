@@ -1,19 +1,14 @@
-body{
-    width: 100%;
-    height: 150px;
-    background:radial-gradient(100% 150% at right, #fff 40%,transparent 90%);
-}
+/* Slideshow */
 
 .slideshow {
     margin: 0 auto;
     overflow: hidden;
     width: 100%;
-    position: relative;
 }
 
 .slideshowSlider {
     white-space: nowrap;
-    transition: ease 2000ms;
+    transition: ease 1000ms;
 }
 
 .slide {
@@ -26,7 +21,6 @@ body{
 
 .slideshowDots {
     text-align: center;
-    margin-top: -10px;
 }
 
 .slideshowDot {
@@ -36,6 +30,7 @@ body{
     border-radius: 50%;
     cursor: pointer;
     margin: 15px 7px 0px;
+    margin-bottom: 100px;
     background-color: #c4c4c4;
 }
 
