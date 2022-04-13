@@ -1,9 +1,9 @@
 import {BrowerRouter, BrowserRouter, Route,Routes} from 'react-router-dom';
 import * as React from 'react';
 import App from './App';
-import Login from './components/Login';
 import HomePage from './components/HomePage';
-import Anime from './components/Anime'
+import HomePageIntro from './components/HomePageIntro';
+import Profile from './components/Profile';
 
 function RouteSwitch(){
     return(
@@ -11,6 +11,8 @@ function RouteSwitch(){
             <Routes>
                 <Route path='/' element={<App/>}/>
                 <Route path='/home' element={<HomePage/>}/>
+                <Route path='/profile' element={<Profile/>}/>
+                <Route path='/selection' element={<HomePageIntro/>}/>
             </Routes>
         </BrowserRouter>
     )

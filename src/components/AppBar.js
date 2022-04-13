@@ -6,12 +6,11 @@ import Button from '@mui/material/Button';
 import styled from '@emotion/styled';
 import Logo from '../images/Pinterest-Logo.png';
 import { Navigate } from 'react-router-dom';
-import Login from './Login';
+import {SignIn} from './Login';
 import SignUp from './Signup';
 import '../styles/AppBar.css';
 import App from '../App';
 import Modal from '@mui/material/Modal';
-
 const style = {
     position: 'absolute',
     top: '22%',
@@ -81,20 +80,6 @@ const StyledAppBar=styled(AppBar)`
         font-weight:bold;
         curser: pointer;
     `;
-    const StyledSearchInput=styled.input`
-        width:60%;
-        height: 100%;
-        padding:15px;
-        border-radius: 20px;
-        border: 2px solid lightgray;
-        margin-left:10px;
-        margin-right:50px;
-        background-image: url(https://www.freeiconspng.com/thumbs/search-icon-png/search-icon-png-5.png);
-        background-color: white;
-        background-repeat: no-repeat;
-        background-position: 98% 15px;
-        background-size:20px;
-    `;
     const StyledText=styled.p`
         padding: 5px;
         cursor: pointer;
@@ -110,6 +95,7 @@ export default function NavBar(props) {
     const [gotoLogin, setGotoLogin] = React.useState(false);
     const [gotoSignup, setGotoSignup] = React.useState(false);
     const [logout, setLogout] = React.useState(false);
+    const [gotoProfile, setGotoProfile] = React.useState(false)
     const handleLoginClick=()=>{
         setGotoLogin(true);
     }
@@ -118,9 +104,13 @@ export default function NavBar(props) {
     }
     const handleLogoutClick=()=>{
         setLogout(true);
+        localStorage.clear();
     }
     const handleProfileClick=()=>{
         handleOpen();
+    }
+    const handleGotoProfileClick=()=>{
+        setGotoProfile(true);
     }
 return (
     <div className='outer-div'>
@@ -129,42 +119,39 @@ return (
         {props.unauth && <Toolbar>
             <StyledLogo src={Logo}/>
             <StyledButton onClick={handleLoginClick}>Log in</StyledButton>
-            <StyledButton2 onClick={handleSignupClick}>Sign in</StyledButton2>
-        </Toolbar>}
+            <StyledButton2 onClick={handleSignupClick}>Sign up</StyledButton2>
+            {gotoLogin && <SignIn gotoLogin={gotoLogin}/>}
+            {gotoSignup && <SignUp/>}
+        </Toolbar>
+        }
         {!props.unauth && 
         <div className="menu">
             <img draggable="false" className="logo" src="https://cdn1.iconfinder.com/data/icons/logotypes/32/pinterest-512.png"/>
             <input id="one" type="text" className="search-bar" placeholder="Search"/>
-            <div class="icon-container">
-                <img tabindex="1" draggable="false" className="icon pp" src="https://i.pinimg.com/564x/bd/94/ce/bd94ce28cf8aefb521bac31d547f6409.jpg" onClick={handleProfileClick}/>
+            <div className="icon-container">
+                <img tabIndex="1" draggable="false" className="icon pp" src="https://i.pinimg.com/564x/bd/94/ce/bd94ce28cf8aefb521bac31d547f6409.jpg" onClick={handleProfileClick}/>
             </div>
-        </div>}
-    </StyledAppBar>
-   
-        <div>
+            <div>
             <Modal
-            PaperProps={{
-                style: {
-                  backgroundColor: 'transparent',
-                  boxShadow: 'none',
-                },
-              }}
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+            style={{background:'transparent'}}
           >
             <Box sx={style}>
-             <StyledText>Profile</StyledText>
+             <StyledText onClick={handleGotoProfileClick}>Profile</StyledText>
              <StyledText onClick={handleLogoutClick}>Logout</StyledText>
             </Box>
         </Modal>
+        {logout && <Navigate to='/' replace/>}
+        {gotoProfile && <Navigate to='/profile'/>}
             </div>
+        </div>}
+    </StyledAppBar>
+        
     </Box>
-    {gotoLogin && <Login gotoLogin={gotoLogin}/>}
-    {gotoSignup && <SignUp/>}
-    {logout && <Navigate to='/' replace/>}
-    
+
     </div>
 );
 }

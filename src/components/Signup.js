@@ -13,7 +13,9 @@ import styled from '@emotion/styled';
 import {auth,provider} from '../firebase.config';
 import { signInWithPopup, GoogleAuthProvider,createUserWithEmailAndPassword } from "firebase/auth";
 import { Navigate } from 'react-router-dom';
-import Login from './Login';
+import {SignIn} from './Login';
+import {UserContext} from '../UserContext';
+
 
 const style = {
     position: 'absolute',
@@ -121,6 +123,7 @@ export default function SignUp() {
             const user = userCredential.user;
             // ...
             setAutenticated(true);
+            localStorage.setItem('user',JSON.stringify(user));
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -141,6 +144,7 @@ export default function SignUp() {
             const token = credential.accessToken;
             // The signed-in user info.
             const user = result.user;
+            localStorage.setItem('user',JSON.stringify(user));
 
             // ...
         }).catch((error) => {
@@ -185,7 +189,6 @@ return (
             Welcome to Pinterest
         </h1>
         <Box component="form" onSubmit={handleSubmit} noValidate style={{width:'100%'}}>
-            
             <div style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
                 <StyledTextField type='email' placeholder='Email Address' name='email' value={email} onChange={handleEmailChange}/>
                 <StyledTextField type='password' placeholder='Password' name='password' value={password} onChange={handlePasswordChange}/>
@@ -202,8 +205,10 @@ return (
     </ThemeProvider>
         </Box>
     </Modal>
-    {autenticated && <Navigate to='/home' replace/>}
-    {gotoLogin && <Login/>}
+    <UserContext.Provider  value={'yellow'}>
+        {autenticated && <Navigate to='/selection' replace/>}
+    </UserContext.Provider>
+    {gotoLogin && <SignIn/>}
     </div>
 );
 }

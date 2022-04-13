@@ -14,8 +14,7 @@ import {auth,provider} from '../firebase.config';
 import { signInWithPopup, GoogleAuthProvider,signInWithEmailAndPassword  } from "firebase/auth";
 import { Navigate } from 'react-router-dom';
 import SignUp from './Signup';
-
-
+import AppBar from './AppBar';
 
 
 const style = {
@@ -85,7 +84,8 @@ const StyledLink=styled.a`
     color:black;
     fontSize: 13px;
     fontWeight: bold
-    margin-top:5px`
+    margin-top:5px`;
+
 
 
 function Copyright(props) {
@@ -103,8 +103,8 @@ return (
 }
 
 const theme = createTheme();
-
-export default function SignIn(props) {
+function SignIn(props) {
+    const [userDetails, setUserDetails] = React.useState(null);
     const [autenticated, setAutenticated] = React.useState(false);
     const [gotoSignup,setGotoSignup]=React.useState(false);
     const [open, setOpen] = React.useState(props.gotoLogin);
@@ -124,7 +124,9 @@ export default function SignIn(props) {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
+            setUserDetails(user);
             setAutenticated(true);
+            localStorage.setItem('user',JSON.stringify(user));
             // ...
         })
         .catch((error) => {
@@ -135,9 +137,30 @@ export default function SignIn(props) {
     };
     const handleNotSignedup=()=>{
         setGotoSignup(true);
-
     }
-        
+    const handleGoogleSignup=()=>{
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            setAutenticated(true);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            setUserDetails(user);
+            localStorage.setItem('user',JSON.stringify(user));
+            // ...
+        }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+        });  
+    }
 
 
 return (
@@ -175,7 +198,7 @@ return (
             <StyledLink href='#'>Forgotten your password?</StyledLink>
             <StyledButtonLogin type='submit'>Log in</StyledButtonLogin>
             <StyledTextOr>OR</StyledTextOr>
-            <StyledButtonGoogle>Continue with Google</StyledButtonGoogle>
+            <StyledButtonGoogle onClick={handleGoogleSignup}>Continue with Google</StyledButtonGoogle>
             <StyledLink onClick={handleNotSignedup}>Not on Pinterest yet? Sign-up</StyledLink>
         </div>
     </Box>
@@ -190,3 +213,4 @@ return (
     </div>
 );
 }
+export { SignIn };

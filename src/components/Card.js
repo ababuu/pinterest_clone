@@ -4,9 +4,9 @@ import '../styles/Card.css'
     export default function ImageMasonry(props) {
 
     return (
-        <body>
+        <div className='body'>
             {props.fromAnime && props.margin.map(mt=>(
-                <main>
+                <main key={mt}>
                 {props.photos.map(photo=>(
                     <article key={photo}>
                         <img className='card-images' src={photo} alt={photo.alt}/>
@@ -14,7 +14,7 @@ import '../styles/Card.css'
                 ))}
             </main>
             ))}
-        </body>
+        </div>
     );
     }
 

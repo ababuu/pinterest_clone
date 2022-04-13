@@ -1,11 +1,12 @@
-import * as React from 'react';
-import AppBar from './AppBar';
+import React from 'react';
 import ImageFetch from './ImageFetch';
-export default function HomePage() {
+import AppBar from './AppBar';
+
+export default function HomePage({queries}){
     return(
-        <body>
+        <div>
             <AppBar unauth={false}/>
-            <ImageFetch/>
-        </body>
+            <ImageFetch queries={queries}/>
+        </div>
     )
 }

@@ -9,10 +9,9 @@ const api = createApi({
 accessKey: "q7m0afK2EKltLfZOpy70IDIetxIOd81hVwGOQ47L7_I"
 });
 
-export default function Body(props) {
+export default function Body({queries}) {
 const [data, setPhotosResponse] = useState([]);
-const [data2, setData2]=useState(null);
-const queries=['landscape','dogs', 'cats','flower','car','trees','bike','hiking'];
+const query=['landscape','dogs', 'cats','flower','car','trees','bike','hiking', 'clouds'];
 
 useEffect(() => {
     queries.map(query=>{
