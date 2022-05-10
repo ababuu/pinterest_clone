@@ -11,19 +11,35 @@ accessKey: "q7m0afK2EKltLfZOpy70IDIetxIOd81hVwGOQ47L7_I"
 
 export default function Body({queries}) {
 const [data, setPhotosResponse] = useState([]);
-const query=['landscape','dogs', 'cats','flower','car','trees','bike','hiking', 'clouds'];
+const query=['landscape','dogs', 'cats','flower','car','trees','bike','hiking', 'clouds', 'skyscraper', 'bird', 'wildlife'];
+
 
 useEffect(() => {
-    queries.map(query=>{
-        api.search
-        .getPhotos({ query: query})
-        .then(result => {
-            setPhotosResponse(prev=>[...prev,result]);
+    if(queries!=null){
+        queries.map(query=>{
+            api.search
+            .getPhotos({ query: query})
+            .then(result => {
+                setPhotosResponse(prev=>[...prev,result]);
+            })
+            .catch(() => {
+                console.log("something went wrong!");
+            });
         })
-        .catch(() => {
-            console.log("something went wrong!");
-        });
-    })
+    }
+    else{
+        query.map(query=>{
+            api.search
+            .getPhotos({ query: query})
+            .then(result => {
+                setPhotosResponse(prev=>[...prev,result]);
+            })
+            .catch(() => {
+                console.log("something went wrong!");
+            });
+        })
+    }
+    
     
 }, []);
 if(queries!=null){
@@ -44,5 +60,13 @@ if(queries!=null){
         );
     }
 }
-};
+else{
+    return (
+        <div className="feed">
+                <MainCard photos1={data}/>
+        </div>
+        );
+    };
+}
+
 

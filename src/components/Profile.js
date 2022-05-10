@@ -26,6 +26,10 @@ const StyledSavedText=styled.h4`
     color:rgb(17, 17, 17)
 `;
 export default function Profile() {
+    const [saved,setSaved]=React.useState([]);
+    React.useEffect(()=>{
+        setSaved(JSON.parse(localStorage.getItem('saved')))
+    },[])
     return(
         <div>
             <AppBar unauth={false}/>
@@ -33,7 +37,7 @@ export default function Profile() {
             <StyledAvatar/>
             <StyledNameText>Ababu Alemu</StyledNameText>
             <StyledSavedText>Saved</StyledSavedText>
-            <ProfileGrid/>
+            <ProfileGrid saved={saved}/>
             </StyledConstainer>
         </div>
         

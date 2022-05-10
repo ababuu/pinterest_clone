@@ -4,8 +4,10 @@ import '../styles/MainCards.css'
 
 export default function MainCard(props) {
     const ref=React.useRef('');
+    const saved = [];
     const handleSave=(arg)=>{
-        console.log(arg)
+        saved.push(arg)
+        localStorage.setItem('saved',JSON.stringify(saved));
     }
     return (
         <div className='body'>
@@ -19,7 +21,7 @@ export default function MainCard(props) {
                                     <div className="overlay">
                                     <div>
                                         <p><a href={pic.user.links.html}>Creator</a></p>
-                                        <button label={pic.urls.regular} className="save" onClick={handleSave(ref.current.src)}>Save</button>
+                                        <button label={pic.urls.regular} className="save" onClick={()=>handleSave(pic.urls.regular)}>Save</button>
                                     </div>
                                     <div>
                                     </div>
