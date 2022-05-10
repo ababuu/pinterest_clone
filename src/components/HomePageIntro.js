@@ -2,7 +2,6 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import styled from "@emotion/styled";
-import HomePage from "./HomePage";
 import { Navigate } from "react-router-dom";
 
 const style = {
@@ -121,7 +120,6 @@ const handleGridClick = (e) => {
     selection = removeItem(selection, label);
     setQuantity(quantity + 1);
     }
-    console.log(selection);
     if (id == "1") {
     setSelected1(!selected1);
     } else if (id == "2") {
@@ -161,9 +159,55 @@ const handleGridClick = (e) => {
 };
 const handleDoneClick = () => {
     setGotoHome(true);
-    localStorage.setItem("queries", selection);
+    if(selection!=null){
+        if(selection.length<=7 && selection.length>=5){
+            
+            if(selection.length==5){
+                selection.push(selection[0]);
+                selection.push(selection[1]);
+                selection.push(selection[2]);
+            }
+            else if(selection.length==6){
+                selection.push(selection[0]);
+                selection.push(selection[1]);
+            }
+            else if(selection.length==7){
+                selection.push(selection[0]);
+            }
+        }
+        if(selection.length<=11 && selection.length>=9){
+            if(selection.length==9){
+                selection.push(selection[0]);
+                selection.push(selection[1]);
+                selection.push(selection[2]);
+            }
+            else if(selection.length==10){
+                selection.push(selection[0]);
+                selection.push(selection[1]);
+            }
+            else if(selection.length==11){
+                selection.push(selection[0]);
+            }
+        }
+        if(selection.length<=15 && selection.length>=13){
+            if(selection.length==13){
+                selection.push(selection[0]);
+                selection.push(selection[1]);
+                selection.push(selection[2]);
+            }
+            else if(selection.length==14){
+                selection.push(selection[0]);
+                selection.push(selection[1]);
+            }
+            else if(selection.length==15){
+                selection.push(selection[0]);
+            }
+        }
+        console.log(selection);
+    }
+    localStorage.setItem("queries", JSON.stringify(selection));
 };
-console.log(selection);
+// console.log(selection);
 return (
     <div>
     {!gotoHome && (

@@ -26,22 +26,23 @@ useEffect(() => {
     })
     
 }, []);
-console.log(data)
-if (data === null || data.length<queries.length) {
-    return <div>Loading...</div>;
-} else if (data.errors) {
-    return (
-    <div>
-        <div>{data.errors[0]}</div>
-        <div>PS: Make sure to set your access token!</div>
-    </div>
-    );
-} else {
-    return (
-    <div className="feed">
-            <MainCard photos1={data}/>
-    </div>
-    );
+if(queries!=null){
+    if (data === null || data.length<queries.length) {
+        return <div>Loading...</div>;
+    } else if (data.errors) {
+        return (
+        <div>
+            <div>{data.errors[0]}</div>
+            <div>PS: Make sure to set your access token!</div>
+        </div>
+        );
+    } else {
+        return (
+        <div className="feed">
+                <MainCard photos1={data}/>
+        </div>
+        );
+    }
 }
 };
 

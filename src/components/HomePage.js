@@ -1,8 +1,10 @@
 import React from 'react';
 import ImageFetch from './ImageFetch';
 import AppBar from './AppBar';
-
-export default function HomePage({queries}){
+let queries=JSON.parse(localStorage.getItem('queries'));
+export default function HomePage(){
+    
+    console.log(queries);
     return(
         <div>
             <AppBar unauth={false}/>

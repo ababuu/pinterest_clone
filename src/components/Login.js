@@ -15,7 +15,7 @@ import { signInWithPopup, GoogleAuthProvider,signInWithEmailAndPassword  } from 
 import { Navigate } from 'react-router-dom';
 import SignUp from './Signup';
 import AppBar from './AppBar';
-
+import CloseIcon from '@mui/icons-material/Close';
 
 const style = {
     position: 'absolute',
@@ -86,6 +86,22 @@ const StyledLink=styled.a`
     fontWeight: bold
     margin-top:5px`;
 
+    const CloseButtonContainer=styled.div`
+        width:100%;
+        position: relative;
+    `
+    const CloseButton=styled(CloseIcon)`
+        position: absolute;
+        right: -20px;
+        top: -50px;
+        background:lightgray;
+        border-radius:50%;
+        color:white;
+        &:hover{
+            background:gray;
+            cursor:pointer;
+        }
+    `
 
 
 function Copyright(props) {
@@ -187,6 +203,9 @@ return (
     <Avatar sx={{background: 'white'}}>
         <img style={{width:'100%'}} src={PinterestLogo} />
     </Avatar>
+    <CloseButtonContainer>
+        <CloseButton/>
+    </CloseButtonContainer>
     <h1 style={{fontSize:'2em'}}>
         Welcome to Pinterest
     </h1>

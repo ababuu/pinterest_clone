@@ -89,7 +89,7 @@ return (
         </div>
         <div
             className="slideshowSlider card-container"
-            style={{ transform: `translate3d(0, ${-index * 100}%, 0)` }}
+            style={{ transform: `translate3d(${-index * 100}%,0, 0)` }}
         >
             
             {photos.map((text, index) => (

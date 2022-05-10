@@ -3,6 +3,10 @@ import '../styles/MainCards.css'
 
 
 export default function MainCard(props) {
+    const ref=React.useRef('');
+    const handleSave=(arg)=>{
+        console.log(arg)
+    }
     return (
         <div className='body'>
         <div className="container">
@@ -15,17 +19,14 @@ export default function MainCard(props) {
                                     <div className="overlay">
                                     <div>
                                         <p><a href={pic.user.links.html}>Creator</a></p>
-                                        <button className="save">Save</button>
+                                        <button label={pic.urls.regular} className="save" onClick={handleSave(ref.current.src)}>Save</button>
                                     </div>
                                     <div>
-                                        {/* <button class="spheric-button">
-                                            twitter.com
-                                        </button> */}
                                     </div>
                                 </div>
-                                    <img src={pic.urls.regular} alt=""/>
+                                    <img  src={pic.urls.regular} alt=""/>
                                 </div>
-                                <p>{pic.alt_description}</p>
+                                {/* <p>{pic.alt_description}</p> */}
                             </div>
                             ))}
                         </div>
