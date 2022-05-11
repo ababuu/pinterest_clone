@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import styled from "@emotion/styled";
 import { Navigate } from "react-router-dom";
+import { getDatabase, ref, set } from "firebase/database";
 
 const style = {
 position: "absolute",
@@ -110,6 +111,7 @@ const [selected13, setSelected13] = React.useState(false);
 const [selected14, setSelected14] = React.useState(false);
 const [selected15, setSelected15] = React.useState(false);
 const [selected16, setSelected16] = React.useState(false);
+const database = getDatabase();
 const handleGridClick = (e) => {
     const id = e.currentTarget.id;
     const label = e.currentTarget.innerText;
@@ -203,7 +205,12 @@ const handleDoneClick = () => {
                 selection.push(selection[0]);
             }
         }
-        console.log(selection);
+        // const db = getDatabase();
+        // set(ref(db, 'users/' + userId), {
+        //     username: name,
+        //     email: email,
+        //     profile_picture : imageUrl
+        // });
     }
     localStorage.setItem("queries", JSON.stringify(selection));
 };

@@ -5,9 +5,14 @@ import '../styles/MainCards.css'
 export default function MainCard(props) {
     const ref=React.useRef('');
     const saved = [];
+    
     const handleSave=(arg)=>{
+        if(JSON.parse(localStorage.getItem('saved'))!=null){
+            JSON.parse(localStorage.getItem('saved')).map(s=>saved.push(s))
+        }
         saved.push(arg)
         localStorage.setItem('saved',JSON.stringify(saved));
+
     }
     return (
         <div className='body'>

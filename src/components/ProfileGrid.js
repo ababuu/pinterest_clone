@@ -16,17 +16,18 @@ width:300px;
 height:200px;
 background:lightgray;
 margin:10px;
-border-radius: 20px
+border-radius: 20px;
 `
 const StyledImg=styled.img`
 width:100%;
+border-radius: 20px;
 `
 export default function ProfileGrid({saved}) {
     console.log(saved)
     return(
         <div>
             <StyledConstainer>
-                {saved.map(s=><StyledDiv><StyledImg src={s}/></StyledDiv>)}
+                {saved!=null ? saved.map(s=><StyledDiv><StyledImg src={s}/></StyledDiv>): <h2>No Saved Photos!</h2>}
             </StyledConstainer>
         </div>
         
