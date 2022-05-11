@@ -4,7 +4,6 @@ import Modal from "@mui/material/Modal";
 import styled from "@emotion/styled";
 import { Navigate } from "react-router-dom";
 import { getDatabase, ref, set } from "firebase/database";
-
 const style = {
 position: "absolute",
 top: "50%",
@@ -111,6 +110,7 @@ const [selected13, setSelected13] = React.useState(false);
 const [selected14, setSelected14] = React.useState(false);
 const [selected15, setSelected15] = React.useState(false);
 const [selected16, setSelected16] = React.useState(false);
+
 const database = getDatabase();
 const handleGridClick = (e) => {
     const id = e.currentTarget.id;

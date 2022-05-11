@@ -13,11 +13,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PinterestLogo from '../images/Pinterest-Logo-notext.png'
-import {auth,provider} from '../firebase.config';
+import {auth,provider,db} from '../firebase.config';
 import { signInWithPopup, GoogleAuthProvider,signInWithEmailAndPassword,createUserWithEmailAndPassword  } from "firebase/auth";
 import CloseIcon from '@mui/icons-material/Close';
 import Modal from '@mui/material/Modal';
-
+import { getDatabase, ref, set } from "firebase/database";
 
 const style = {
     position: 'absolute',
@@ -185,6 +185,9 @@ const StyledAppBar=styled(AppBar)`
             cursor:pointer;
         }
     `
+    const StyledErrorMessage=styled.p`
+        color:red;
+    `
     const theme = createTheme();
 
 export default function NavBar(props) {
@@ -201,6 +204,9 @@ export default function NavBar(props) {
     const [gotoSignup,setGotoSignup]=React.useState(false);
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [username, setUsername] = React.useState('');
+    const [signuperror, setSignupError]=React.useState('');
+    const [loginerror, setLoginError]=React.useState('');
 
 
     const handleAlreadyMember=()=>{
@@ -213,6 +219,9 @@ export default function NavBar(props) {
     const handlePasswordChange=(e)=>{
         setPassword(e.target.value);
     }
+    const handleUsernameChange=(e)=>{
+        setUsername(e.target.value);
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
@@ -222,14 +231,23 @@ export default function NavBar(props) {
             setUserDetails(user);
             setLoginAutenticated(true);
             localStorage.setItem('user',JSON.stringify(user));
+            
             // ...
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            setLoginError(errorMessage.slice(22,errorMessage.length-2))
             console.log(errorMessage)
         });
     };
+    function writeUserData(userId, name, email) {
+        set(ref(db, 'users/' + userId), {
+            username: name,
+            email: email,
+        });
+    }
+    
     const handleSubmit2 = (event) => {
         event.preventDefault();
         createUserWithEmailAndPassword(auth, email, password)
@@ -239,10 +257,14 @@ export default function NavBar(props) {
             // ...
             setSignupAutenticated(true);
             localStorage.setItem('user',JSON.stringify(user));
+            console.log(user.uid);
+            writeUserData(user.uid,username,email)
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            setSignupError(errorMessage.slice(22,errorMessage.length-2))
+            console.log(errorMessage)
             // ..
         });
         console.log({
@@ -304,8 +326,6 @@ return (
             <StyledLogo src={Logo}/>
             <StyledButton onClick={handleLoginClick}>Log in</StyledButton>
             <StyledButton2 onClick={handleSignupClick}>Sign up</StyledButton2>
-            {/* {gotoLogin && <SignIn gotoLogin={gotoLogin}/>} */}
-            {/* {gotoSignup && <SignUp/>} */}
         </Toolbar>
         }
         {!props.unauth && 
@@ -368,11 +388,12 @@ return (
     <h1 style={{fontSize:'2em'}}>
         Welcome to Pinterest
     </h1>
+    <StyledErrorMessage>{loginerror}</StyledErrorMessage>
     <Box component="form" onSubmit={handleSubmit} noValidate style={{width:'100%'}}>
         
         <div style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
-        <StyledTextField type='email' placeholder='Email Address' name='email' value={email} onChange={handleEmailChange}/>
-            <StyledTextField type='password' placeholder='Password' name='password' value={password} onChange={handlePasswordChange}/>
+        <StyledTextField type='email' placeholder='Email Address' name='email' value={email} onChange={handleEmailChange} required/>
+            <StyledTextField type='password' placeholder='Password' name='password' value={password} onChange={handlePasswordChange} required/>
             <StyledLink href='#'>Forgotten your password?</StyledLink>
             <StyledButtonLogin type='submit'>Log in</StyledButtonLogin>
             <StyledTextOr>OR</StyledTextOr>
@@ -381,7 +402,6 @@ return (
         </div>
     </Box>
     </Box>
-    {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
 </Container>
 </ThemeProvider>
     </Box>
@@ -416,10 +436,12 @@ return (
         <h1 style={{fontSize:'2em'}}>
             Welcome to Pinterest
         </h1>
+        <StyledErrorMessage>{signuperror}</StyledErrorMessage>
         <Box component="form" onSubmit={handleSubmit2} noValidate style={{width:'100%'}}>
             <div style={{display:'flex',alignItems:'center', justifyContent:'center',flexDirection:'column'}}>
-                <StyledTextField type='email' placeholder='Email Address' name='email' value={email} onChange={handleEmailChange}/>
-                <StyledTextField type='password' placeholder='Password' name='password' value={password} onChange={handlePasswordChange}/>
+                <StyledTextField type='email' placeholder='Email Address' name='email' value={email} onChange={handleEmailChange} required/>
+                <StyledTextField type='password' placeholder='password' name='password' value={password} onChange={handlePasswordChange} required/>
+                <StyledTextField type='text' placeholder='Username' name='username' value={username} onChange={handleUsernameChange} required/>
                 <StyledLink href='#'>Forgotten your password?</StyledLink>
                 <StyledButtonLogin type='submit'>Continue</StyledButtonLogin>
                 <StyledTextOr>OR</StyledTextOr>
@@ -428,7 +450,6 @@ return (
             </div>
         </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
     </Container>
     </ThemeProvider>
         </Box>
